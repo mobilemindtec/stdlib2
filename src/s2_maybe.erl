@@ -57,7 +57,8 @@ lift(F) ->
     Res                -> {ok, Res}
   catch
     throw:{error, Rsn} -> {error, Rsn};
-    _:Exn:Stacktrace              -> {error, {lifted_exn, Exn, Stacktrace}}
+    % _:Exn:Stacktrace              -> {error, {lifted_exn, Exn, Stacktrace}} % OTP 20
+    _:Exn              -> {error, {lifted_exn, Exn, erlang:get_stacktrace(Exn)}}
   end.
 
 
